@@ -32,12 +32,15 @@ public class MyAsyncServlet extends HttpServlet {
         ServletContext appScope = request.getServletContext();
         //((Queue<AsyncContext>)appScope.getAttribute("slowWebServiceJobQueue")).add(aCtx);
         final AsyncContext acontext = request.startAsync();   // <async-supported>true</async-supported> in web.xml
+        if(a.get() == 0)
+        System.out.println("timeoug value:"+acontext.getTimeout()); // by default value is 30000...
+        acontext.setTimeout(7000);   // Period of time for which request will be hold and release the sever thread 
         acontext.start(new Runnable() {
             public void run() {
              //  String param = acontext.getRequest().getParameter("param");
                try {
-	       			System.out.println("waiting time started:"+"     ----  "+a.getAndIncrement());
-	       			Thread.sleep(20000);   // How long can this wait
+	       			//System.out.println("waiting time started:"+"     ----  "+a.getAndIncrement());
+	       			Thread.sleep(6000);   // How long can this wait.. if we put this value very high... it will throw internal server error.
 	       			System.out.println("waiting time completed:"+Thread.currentThread().getName());
 	                /*Random rn = new Random();
 	                Thread.sleep(rn.nextInt(10000));*/
@@ -50,7 +53,7 @@ public class MyAsyncServlet extends HttpServlet {
             }
       });
 		
-		System.out.println("-------- service side response:"+Thread.currentThread().getName()+"\n");
+		//System.out.println("-------- service side response:"+Thread.currentThread().getName()+"\n");
 		response.getWriter().append("async servlet called:"+Thread.currentThread().getName());
 	}
 

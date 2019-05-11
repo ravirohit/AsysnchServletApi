@@ -12,7 +12,6 @@ import org.apache.http.impl.client.HttpClientBuilder;
 public class RestConsumeMethodImpl {
 	public static void apiCall(int i){
 		try {
-		System.out.println("==== start:"+i++);
 		// create HTTP Client
 		RequestConfig.Builder requestBuilder = RequestConfig.custom();
 	//	requestBuilder.setConnectTimeout(2000);

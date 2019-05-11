@@ -17,7 +17,7 @@ public class MultipleRestAPICall {
 		
 	ExecutorService es = Executors.newFixedThreadPool(300);
 	
-	for(int i = 0;i < 100; i++){
+	for(int i = 0;i < 5; i++){
 		es.execute(() -> {
 			RestConsumeMethodImpl.apiCall(a);
 		});
