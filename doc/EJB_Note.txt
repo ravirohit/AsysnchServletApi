@@ -1,0 +1,62 @@
+-> This project is all about two concept:
+   1. Asynchronous Servlet api
+   2. EJB API ... implementation of @Inject and @EJB  
+======================================================================
+-> Finding name for EJB:
+  08:49:50,096 INFO  [org.jboss.as.ejb3.deployment] (MSC service thread 1-2) WFLYEJB0473: JNDI bindings for session bean named 'FirstDemoEjb' in deployment unit 'deployment "AsysnchServletApi.war"' are as follows:
+
+	java:global/AsysnchServletApi/FirstDemoEjb!com.learn.ejbinterface.FirstDemoEjbRemote
+	java:app/AsysnchServletApi/FirstDemoEjb!com.learn.ejbinterface.FirstDemoEjbRemote
+	java:module/FirstDemoEjb!com.learn.ejbinterface.FirstDemoEjbRemote
+	java:jboss/exported/AsysnchServletApi/FirstDemoEjb!com.learn.ejbinterface.FirstDemoEjbRemote
+	java:global/AsysnchServletApi/FirstDemoEjb    // able to find with this name in the EJB Client  .. used for Jindi lookup
+	java:app/AsysnchServletApi/FirstDemoEjb  
+	java:module/FirstDemoEjb
+=========================== NOTE: ===========================================
+-> Name of few annotation used in EJB application:
+   1. @Stateless 2. @Stateful 3. ManagedBean 4. @EJB  5. @StartUp (to early initialization)
+-> EJB is an acronym for enterprise java bean.
+-> It is a specification provided by Sun Microsystems to develop secured, robust and scalable distributed applications.
+-> To run EJB application, you need an application server (EJB Container).
+-> It performs:
+	1. life cycle management,
+	2. security,
+	3. transaction management, and
+	4. object pooling
+-> Application needs Remote Access. In other words, it is distributed.
+   Application needs to be scalable. EJB applications supports load balancing, clustering and fail-over.
+   Application needs encapsulated business logic. EJB application is separated from presentation and persistent layer.
+-> Types of Enterprise Java Bean:
+   1. Session Bean: Session bean contains business logic that can be invoked by local, remote or webservice client.
+             -> Again it is splitted into three parts:
+                1. Stateless Session Bean
+                2. Stateful Session Bean
+                3. Singleton Session Bean
+   2. Message Driven Bean: Like Session Bean, it contains the business logic but it is invoked by passing message.
+   3. Entity Bean: It encapsulates the state that can be persisted in the database. It is deprecated. Now, it is replaced with JPA (Java Persistent API).
+-> Difference between EJB and RMI:
+   -> RMI need to be done by the java programmer. EJB provided by EJB Container automatically.
+   -> RMI is not a server-side component. It is not required to be deployed on the server.
+      EJB is a server-side component, it is required to be deployed on the server.
+   -> RMI is built on the top of socket programming.
+      EJB technology is built on the top of RMI.
+-> Disadvantages of EJB:
+   1. Requires application server
+   2. Requires only java client. For other language client, you need to go for webservice.
+   3. Little complex to understand and develop ejb applications.
+============================= Q&A ========================
+Q) Can we inject EJB bean using @Inject bean?
+Q) What is difference between @Inject and @EJB annotation?
+Ans: @Inject can inject any bean, while @EJB can only inject EJBs. You can use either to inject EJBs, but I'd prefer @Inject everywhere.
+                      OR
+  -> Regarding the @EJB annotation: is it now deprecated? No, you can use the @EJB annotation normally, but this annotation isn't needed when you want to 
+     inject local components. In this case, I suggest to use @Inject and forget @EJB because CDI attends to both components.
+NOTE: if we are trying to inject normalNonEJB Class using @Inject and throwing error. then check if beans.xml is created in WEB-INF folder or not ... if
+   not created just create one like here. 
+Q) Does it mandatory to create file ejb-jar.xml?
+Ans:in general you don't need the ejb-jar.xml. You can include the ejb-jar.xml file if you intend to override settings from given annotations. 
+   But in generel, you don't need it.
+   
+  
+
+    
