@@ -12,6 +12,16 @@
 	java:global/AsysnchServletApi/FirstDemoEjb    // able to find with this name in the EJB Client  .. used for Jindi lookup
 	java:app/AsysnchServletApi/FirstDemoEjb  
 	java:module/FirstDemoEjb
+-> Example for EJB client code:  .. right now make sure Client war file is also deployed on the same server for below client code... 
+    If Client is on different server and EJB is on different server then we have to create the properties Object which contains the 
+    information about the remote server and pass it in the constructor of IntialContext Class. 
+    
+		    InitialContext context = new InitialContext();
+			FirstDemoEjbRemote obj =(FirstDemoEjbRemote) context.lookup("java:global/AsysnchServletApi/FirstDemoEjb");
+		    System.out.println("Looked up object:"+obj);
+		    String str = obj.testDemo("req object from client");
+		    System.out.println("response from EJB response:"+str);
+	
 =========================== NOTE: ===========================================
 -> Name of few annotation used in EJB application:
    1. @Stateless 2. @Stateful 3. ManagedBean 4. @EJB  5. @StartUp (to early initialization)
